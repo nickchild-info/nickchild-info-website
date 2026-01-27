@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reverse Engineering Airbnb's Search Ranking Algorithm | InfoQlik Case Study</title>
+    <title>Reverse Engineering Airbnb's Search Ranking Algorithm | Nicholas Child</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1a1a2e;
+            --primary: #E8EDF2;
             --accent: #ff5a5f;
             --accent-light: #ffebec;
             --teal: #00a699;
             --teal-light: #e6f7f6;
-            --text: #2d3436;
-            --text-light: #636e72;
-            --bg: #fafafa;
-            --white: #ffffff;
-            --border: #e9ecef;
+            --text: #E8EDF2;
+            --text-light: #8B95A5;
+            --bg: #050708;
+            --white: #0a0c0f;
+            --border: #151a20;
             --code-bg: #282a36;
         }
 
@@ -27,7 +27,7 @@
         }
 
         body {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.7;
@@ -78,7 +78,7 @@
         }
 
         h1 {
-            font-family: 'Fraunces', serif;
+            font-family: 'Inter', sans-serif;
             font-size: 48px;
             font-weight: 700;
             line-height: 1.15;
@@ -121,7 +121,7 @@
         }
 
         h2 {
-            font-family: 'Fraunces', serif;
+            font-family: 'Inter', sans-serif;
             font-size: 32px;
             font-weight: 600;
             color: var(--primary);
@@ -190,7 +190,7 @@
         }
 
         .stat-number {
-            font-family: 'Fraunces', serif;
+            font-family: 'Inter', sans-serif;
             font-size: 42px;
             font-weight: 700;
             color: var(--accent);
@@ -477,7 +477,7 @@
         }
 
         .comparison-value {
-            font-family: 'Fraunces', serif;
+            font-family: 'Inter', sans-serif;
             font-size: 48px;
             font-weight: 700;
             margin-bottom: 8px;
@@ -703,7 +703,7 @@
                 <p>The spider constructs URLs dynamically, appending search parameters (guest count, GPS boundaries) and iterating through all result pages automatically.</p>
 
                 <h3>Parsing Hidden JSON Data</h3>
-                <p>The real value came from extracting data embedded in each listing's HTML as JSON. This included fields not visible on the surface — satisfaction scores, response rates, calendar update frequency, and 30+ other variables.</p>
+                <p>The real value came from extracting data embedded in each listing's HTML as JSON. This included fields not visible on the surface - satisfaction scores, response rates, calendar update frequency, and 30+ other variables.</p>
 
                 <div class="code-container">
                     <div class="code-header">
@@ -762,7 +762,7 @@
 
                 <div class="finding-card">
                     <h4><span class="finding-rank">2</span> Price (0.901)</h4>
-                    <p>Lower prices correlate with better rankings. Airbnb wants to show users the best deals — competitive pricing is rewarded.</p>
+                    <p>Lower prices correlate with better rankings. Airbnb wants to show users the best deals - competitive pricing is rewarded.</p>
                 </div>
 
                 <div class="finding-card">
@@ -772,7 +772,7 @@
 
                 <div class="finding-card">
                     <h4><span class="finding-rank">4</span> Minimum Stay Length (0.885)</h4>
-                    <p>Shorter minimum stays correlate with higher rankings — flexibility is rewarded.</p>
+                    <p>Shorter minimum stays correlate with higher rankings - flexibility is rewarded.</p>
                 </div>
 
                 <div class="finding-card">
@@ -800,7 +800,7 @@
 
                 <div class="insight-box">
                     <h4>Surprising Non-Factors</h4>
-                    <p>SuperHost status ranked only 13th (0.783) — not as impactful as expected. Account age, allowing smoking, pet-friendly policies, and having "view" in the title showed almost no correlation with ranking.</p>
+                    <p>SuperHost status ranked only 13th (0.783) - not as impactful as expected. Account age, allowing smoking, pet-friendly policies, and having "view" in the title showed almost no correlation with ranking.</p>
                 </div>
             </section>
 
@@ -838,10 +838,10 @@
                 <div class="chart-container">
                     <div class="chart-title">Amenities Ranked by Correlation to Search Position</div>
                     <img src="correlation.webp" alt="Table showing 34 amenities ranked by correlation, with Iron, Laptop Workspace, and Hangers at the top" class="data-image">
-                    <p class="image-caption">Red highlighted rows indicate "Business Ready" required amenities — notably these cluster in the top half of correlations.</p>
+                    <p class="image-caption">Red highlighted rows indicate "Business Ready" required amenities - notably these cluster in the top half of correlations.</p>
                 </div>
 
-                <p>Interestingly, "Business Ready" required amenities (iron, laptop workspace, hangers, hair dryer, essentials) all showed strong correlation with better rankings. Meanwhile, TV and Cable TV showed almost no correlation — perhaps less important for properties hosting 6+ guests.</p>
+                <p>Interestingly, "Business Ready" required amenities (iron, laptop workspace, hangers, hair dryer, essentials) all showed strong correlation with better rankings. Meanwhile, TV and Cable TV showed almost no correlation - perhaps less important for properties hosting 6+ guests.</p>
             </section>
 
             <!-- Conclusions -->
@@ -906,24 +906,24 @@
 
                 <div class="insight-box teal">
                     <h4>What Came Next</h4>
-                    <p>This methodology was later expanded into a multi-market study with Angel Host, analysing how ranking factors vary by geographic location — proving that a one-size-fits-all optimisation strategy doesn't work.</p>
+                    <p>This methodology was later expanded into a multi-market study with Angel Host, analysing how ranking factors vary by geographic location - proving that a one-size-fits-all optimisation strategy doesn't work.</p>
                 </div>
 
-                <p>The project demonstrated that with the right technical approach — web scraping, data engineering, and statistical analysis — it's possible to reverse-engineer opaque algorithms and extract actionable business intelligence.</p>
+                <p>The project demonstrated that with the right technical approach - web scraping, data engineering, and statistical analysis - it's possible to reverse-engineer opaque algorithms and extract actionable business intelligence.</p>
             </section>
 
             <!-- CTA -->
             <div class="cta-section">
                 <h2>Need Custom Data Solutions?</h2>
                 <p>I build data pipelines, web scrapers, and analytics solutions that turn raw data into competitive advantage.</p>
-                <a href="mailto:nick@infoqlik.com" class="cta-button">Get in Touch</a>
+                <a href="mailto:nick@nickchild.info" class="cta-button">Get in Touch</a>
             </div>
         </div>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; InfoQlik | Data & Analytics Consulting</p>
+            <p>&copy; Nicholas Child Solutions</p>
         </div>
     </footer>
 </body>

@@ -3,542 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halving AWS Lambda Costs with Python Parallel Processing | InfoQlik Case Study</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #1a1a2e;
-            --accent: #ff9900;
-            --accent-light: #fff4e6;
-            --teal: #16a085;
-            --teal-light: #e8f6f3;
-            --text: #2d3436;
-            --text-light: #636e72;
-            --bg: #fafafa;
-            --white: #ffffff;
-            --border: #e9ecef;
-            --aws-dark: #232f3e;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, var(--aws-dark) 0%, #37475a 100%);
-            color: var(--white);
-            padding: 80px 0 100px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255,153,0,0.2) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .badge {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--aws-dark);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            margin-bottom: 24px;
-            text-transform: uppercase;
-        }
-
-        h1 {
-            font-family: 'Fraunces', serif;
-            font-size: 48px;
-            font-weight: 700;
-            line-height: 1.15;
-            margin-bottom: 24px;
-        }
-
-        .hero-subtitle {
-            font-size: 20px;
-            opacity: 0.9;
-            max-width: 650px;
-            margin-bottom: 40px;
-        }
-
-        .meta-row {
-            display: flex;
-            gap: 32px;
-            flex-wrap: wrap;
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            opacity: 0.8;
-        }
-
-        .meta-item svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        /* Main Content */
-        .main {
-            padding: 60px 0;
-        }
-
-        section {
-            margin-bottom: 60px;
-        }
-
-        h2 {
-            font-family: 'Fraunces', serif;
-            font-size: 32px;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 24px;
-            position: relative;
-            padding-bottom: 16px;
-        }
-
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: var(--accent);
-            border-radius: 2px;
-        }
-
-        h3 {
-            font-size: 22px;
-            font-weight: 600;
-            color: var(--primary);
-            margin: 32px 0 16px;
-        }
-
-        p {
-            margin-bottom: 20px;
-            color: var(--text);
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin: 40px 0;
-        }
-
-        @media (max-width: 768px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .stat-card {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 32px;
-            text-align: center;
-            border: 1px solid var(--border);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
-        }
-
-        .stat-number {
-            font-family: 'Fraunces', serif;
-            font-size: 52px;
-            font-weight: 700;
-            color: var(--accent);
-            line-height: 1;
-            margin-bottom: 8px;
-        }
-
-        .stat-number.green {
-            color: var(--teal);
-        }
-
-        .stat-label {
-            font-size: 15px;
-            color: var(--text-light);
-            font-weight: 500;
-        }
-
-        /* Chart Container */
-        .chart-container {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 32px;
-            margin: 32px 0;
-            border: 1px solid var(--border);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-        }
-
-        .chart-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 24px;
-        }
-
-        .data-image {
-            width: 100%;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
-
-        .image-caption {
-            font-size: 13px;
-            color: var(--text-light);
-            margin-top: 16px;
-            font-style: italic;
-        }
-
-        /* Code Block */
-        .code-block {
-            background: var(--aws-dark);
-            border-radius: 16px;
-            padding: 28px 32px;
-            margin: 32px 0;
-            overflow-x: auto;
-        }
-
-        .code-block-title {
-            font-size: 13px;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 16px;
-        }
-
-        .code-block pre {
-            margin: 0;
-            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-            font-size: 14px;
-            line-height: 1.6;
-            color: #e9ecef;
-        }
-
-        .code-block .keyword {
-            color: #ff79c6;
-        }
-
-        .code-block .function {
-            color: #8be9fd;
-        }
-
-        .code-block .string {
-            color: #f1fa8c;
-        }
-
-        .code-block .number {
-            color: #bd93f9;
-        }
-
-        .code-block .comment {
-            color: #6272a4;
-        }
-
-        /* Key Insight Box */
-        .insight-box {
-            background: linear-gradient(135deg, var(--accent-light) 0%, #fffaf0 100%);
-            border-left: 4px solid var(--accent);
-            border-radius: 0 16px 16px 0;
-            padding: 28px 32px;
-            margin: 32px 0;
-        }
-
-        .insight-box h4 {
-            color: #d48806;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-        }
-
-        .insight-box p {
-            margin: 0;
-            font-size: 17px;
-            color: var(--primary);
-        }
-
-        .insight-box.teal {
-            background: linear-gradient(135deg, var(--teal-light) 0%, #f0faf8 100%);
-            border-left-color: var(--teal);
-        }
-
-        .insight-box.teal h4 {
-            color: var(--teal);
-        }
-
-        /* Timeline */
-        .timeline {
-            position: relative;
-            margin: 40px 0;
-            padding-left: 40px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 8px;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(180deg, var(--accent), var(--teal));
-            border-radius: 2px;
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 32px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -40px;
-            top: 4px;
-            width: 18px;
-            height: 18px;
-            background: var(--white);
-            border: 3px solid var(--accent);
-            border-radius: 50%;
-        }
-
-        .timeline-item:last-child::before {
-            border-color: var(--teal);
-        }
-
-        .timeline-item h4 {
-            font-size: 17px;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-
-        .timeline-item p {
-            margin: 0;
-            font-size: 15px;
-            color: var(--text-light);
-        }
-
-        /* Before/After Comparison */
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 24px;
-            align-items: center;
-            margin: 40px 0;
-        }
-
-        @media (max-width: 600px) {
-            .comparison-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .comparison-card {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 32px;
-            text-align: center;
-            border: 1px solid var(--border);
-        }
-
-        .comparison-card.before {
-            border-color: #e74c3c;
-        }
-
-        .comparison-card.after {
-            border-color: var(--teal);
-        }
-
-        .comparison-card h4 {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 16px;
-        }
-
-        .comparison-card.before h4 {
-            color: #e74c3c;
-        }
-
-        .comparison-card.after h4 {
-            color: var(--teal);
-        }
-
-        .comparison-value {
-            font-family: 'Fraunces', serif;
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .comparison-card.before .comparison-value {
-            color: var(--text-light);
-        }
-
-        .comparison-card.after .comparison-value {
-            color: var(--teal);
-        }
-
-        .comparison-label {
-            font-size: 14px;
-            color: var(--text-light);
-        }
-
-        .comparison-arrow {
-            font-size: 32px;
-            color: var(--accent);
-        }
-
-        @media (max-width: 600px) {
-            .comparison-arrow {
-                transform: rotate(90deg);
-            }
-        }
-
-        /* Tech Stack */
-        .tech-stack {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            margin: 24px 0;
-        }
-
-        .tech-tag {
-            background: var(--aws-dark);
-            color: var(--white);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .tech-tag.python {
-            background: #3776ab;
-        }
-
-        .tech-tag.aws {
-            background: #ff9900;
-            color: var(--aws-dark);
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, var(--aws-dark) 0%, #37475a 100%);
-            border-radius: 24px;
-            padding: 48px;
-            text-align: center;
-            color: var(--white);
-            margin-top: 60px;
-        }
-
-        .cta-section h2 {
-            color: var(--white);
-        }
-
-        .cta-section h2::after {
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .cta-section p {
-            color: rgba(255,255,255,0.85);
-            max-width: 500px;
-            margin: 0 auto 32px;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--aws-dark);
-            padding: 16px 36px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 16px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(255,153,0,0.4);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px 0;
-            color: var(--text-light);
-            font-size: 14px;
-        }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 32px;
-            }
-
-            h2 {
-                font-size: 26px;
-            }
-
-            .hero {
-                padding: 60px 0 80px;
-            }
-
-            .stat-number {
-                font-size: 40px;
-            }
-        }
-    </style>
+    <title>Halving AWS Lambda Costs with Python Parallel Processing | Nicholas Child</title>
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../styles/case-study.css">
 </head>
 <body>
     <!-- Hero Section -->
     <header class="hero">
         <div class="container hero-content">
+            <a href="../../index.html#writing" class="back-link">← Back to articles</a>
             <span class="badge">Case Study</span>
             <h1>Halving AWS Lambda Costs with Python Parallel Processing</h1>
-            <p class="hero-subtitle">How a two-line code change reduced compute times by 65% and cut our AWS bill in half — a lesson in the real-world value of code optimisation.</p>
+            <p class="hero-subtitle">How a two-line code change reduced compute times by 65% and cut our AWS bill in half - a lesson in the real-world value of code optimisation.</p>
             <div class="meta-row">
                 <div class="meta-item">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
@@ -580,7 +59,7 @@
                 </div>
 
                 <div class="chart-container">
-                    <div class="chart-title">AWS Lambda Average Compute Time — Before & After Optimisation</div>
+                    <div class="chart-title">AWS Lambda Average Compute Time - Before & After Optimisation</div>
                     <img src="lamdabill.webp" alt="AWS CloudWatch graph showing Lambda compute time dropping from ~23 seconds to ~8 seconds after optimization in late October 2019" class="data-image">
                     <p class="image-caption">The dramatic drop at the end of October 2019 shows the immediate impact of deploying the parallel processing optimisation. Average compute time fell from ~23 seconds to under 8 seconds.</p>
                 </div>
@@ -589,13 +68,13 @@
             <!-- The Challenge -->
             <section>
                 <h2>The Challenge</h2>
-                <p>I had set up a series of AWS Lambda functions to gather information from the web periodically and write it to an RDS instance. The functions were running fine, but the average invocation time was around <strong>23 seconds</strong> — not unusual for an I/O-heavy process where most of the time is spent waiting for server responses.</p>
+                <p>I had set up a series of AWS Lambda functions to gather information from the web periodically and write it to an RDS instance. The functions were running fine, but the average invocation time was around <strong>23 seconds</strong> - not unusual for an I/O-heavy process where most of the time is spent waiting for server responses.</p>
 
                 <p>However, with AWS Lambda, you pay for what you use. Billing is calculated based on both the number of invocations <em>and</em> the compute time (measured in GB-seconds). Every second of execution time directly impacts costs.</p>
 
                 <div class="insight-box">
                     <h4>The Lambda Billing Model</h4>
-                    <p>AWS Lambda charges for every 1ms of execution time, rounded up. A function running for 23 seconds costs roughly 3× more than one running for 8 seconds — making optimisation directly profitable.</p>
+                    <p>AWS Lambda charges for every 1ms of execution time, rounded up. A function running for 23 seconds costs roughly 3x more than one running for 8 seconds - making optimisation directly profitable.</p>
                 </div>
 
                 <div class="tech-stack">
@@ -609,7 +88,7 @@
             <!-- The Solution -->
             <section>
                 <h2>The Solution</h2>
-                <p>The key insight was recognising that our workload was <strong>I/O-bound, not CPU-bound</strong>. Most of the 23 seconds was spent waiting for external servers to respond — time during which the Lambda function was essentially idle.</p>
+                <p>The key insight was recognising that our workload was <strong>I/O-bound, not CPU-bound</strong>. Most of the 23 seconds was spent waiting for external servers to respond - time during which the Lambda function was essentially idle.</p>
 
                 <p>This is the perfect use case for parallel processing. Instead of making requests sequentially (wait for response 1, then request 2, wait for response 2, etc.), we could make all requests simultaneously and process responses as they arrived.</p>
 
@@ -635,13 +114,13 @@
                     </div>
                     <div class="timeline-item">
                         <h4>Automatic Cleanup</h4>
-                        <p>The context manager ensures all threads are properly closed once processing completes — no manual cleanup required.</p>
+                        <p>The context manager ensures all threads are properly closed once processing completes - no manual cleanup required.</p>
                     </div>
                 </div>
 
                 <div class="insight-box teal">
                     <h4>Why Threads Work Here</h4>
-                    <p>Python's Global Interpreter Lock (GIL) normally prevents true parallel execution. However, for I/O-bound tasks, threads release the GIL while waiting for responses — making ThreadPoolExecutor ideal for web scraping and API calls.</p>
+                    <p>Python's Global Interpreter Lock (GIL) normally prevents true parallel execution. However, for I/O-bound tasks, threads release the GIL while waiting for responses - making ThreadPoolExecutor ideal for web scraping and API calls.</p>
                 </div>
             </section>
 
@@ -663,7 +142,7 @@
                     </div>
                 </div>
 
-                <p>The impact was immediate and visible in CloudWatch the moment the optimised code was deployed. What had been a steady line at around 23 seconds dropped sharply to under 8 seconds — and stayed there.</p>
+                <p>The impact was immediate and visible in CloudWatch the moment the optimised code was deployed. What had been a steady line at around 23 seconds dropped sharply to under 8 seconds - and stayed there.</p>
 
                 <p>More importantly, the AWS bill reflected this improvement. With Lambda billing based on GB-seconds, reducing execution time by 65% translated directly into a <strong>53% reduction in costs</strong>.</p>
             </section>
@@ -681,7 +160,7 @@
 
                 <div class="chart-container">
                     <h3 style="margin-top: 0;">2. Serverless Amplifies Optimisation ROI</h3>
-                    <p style="margin-bottom: 0;">In traditional server infrastructure, an inefficient function just wastes cycles. In serverless, every wasted millisecond is billed. This makes code optimisation directly profitable — the ROI is immediate and measurable.</p>
+                    <p style="margin-bottom: 0;">In traditional server infrastructure, an inefficient function just wastes cycles. In serverless, every wasted millisecond is billed. This makes code optimisation directly profitable - the ROI is immediate and measurable.</p>
                 </div>
 
                 <div class="chart-container">
@@ -694,14 +173,14 @@
             <div class="cta-section">
                 <h2>Need Help Optimising Your Cloud Infrastructure?</h2>
                 <p>I help businesses reduce cloud costs and improve performance through data-driven analysis and smart engineering.</p>
-                <a href="mailto:nick@infoqlik.com" class="cta-button">Get in Touch</a>
+                <a href="mailto:nick@nickchild.info" class="cta-button">Get in Touch</a>
             </div>
         </div>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; InfoQlik | Data & Analytics Consulting</p>
+            <p>&copy; Nicholas Child Solutions | <a href="../../index.html">Back to main site</a></p>
         </div>
     </footer>
 </body>

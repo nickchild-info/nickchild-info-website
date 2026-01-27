@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airbnb Search Ranking Algorithm Analysis | InfoQlik Case Study</title>
+    <title>Airbnb Search Ranking Algorithm Analysis | Nicholas Child</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1a1a2e;
+            --primary: #E8EDF2;
             --accent: #ff6b6b;
             --accent-light: #ffeaea;
             --teal: #16a085;
             --teal-light: #e8f6f3;
-            --text: #2d3436;
-            --text-light: #636e72;
-            --bg: #fafafa;
-            --white: #ffffff;
-            --border: #e9ecef;
+            --text: #E8EDF2;
+            --text-light: #8B95A5;
+            --bg: #050708;
+            --white: #0a0c0f;
+            --border: #151a20;
         }
 
         * {
@@ -26,7 +26,7 @@
         }
 
         body {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.7;
@@ -77,7 +77,7 @@
         }
 
         h1 {
-            font-family: 'Fraunces', serif;
+            font-family: 'Inter', sans-serif;
             font-size: 48px;
             font-weight: 700;
             line-height: 1.15;
@@ -140,7 +140,7 @@
         }
 
         h2 {
-            font-family: 'Fraunces', serif;
+            font-family: 'Inter', sans-serif;
             font-size: 32px;
             font-weight: 600;
             color: var(--primary);
@@ -201,7 +201,7 @@
         }
 
         .stat-number {
-            font-family: 'Fraunces', serif;
+            font-family: 'Inter', sans-serif;
             font-size: 42px;
             font-weight: 700;
             color: var(--accent);
@@ -589,9 +589,10 @@
     <!-- Hero Section -->
     <header class="hero">
         <div class="container hero-content">
+            <a href="../../index.html#writing" style="color: #8B95A5; text-decoration: none; font-size: 14px; display: block; margin-bottom: 16px;">← Back to articles</a>
             <span class="badge">Case Study</span>
             <h1>Decoding Airbnb's Search Ranking Algorithm</h1>
-            <p class="hero-subtitle">A data-driven analysis of over 70 variables across thousands of listings to understand what drives search visibility — and how it varies by market.</p>
+            <p class="hero-subtitle">A data-driven analysis of over 70 variables across thousands of listings to understand what drives search visibility - and how it varies by market.</p>
             <div class="meta-row">
                 <div class="meta-item">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
@@ -624,7 +625,7 @@
                 <h2>Project Overview</h2>
                 <p>Angel Host, a professional vacation rental management company specialising in revenue maximisation, partnered with me to conduct comprehensive research into Airbnb's search ranking algorithm. The goal was to answer a critical question: <strong>What do properties that appear high on Airbnb's search results have in common?</strong></p>
                 
-                <p>While Airbnb's published research indicates that relevancy and conversion are the most important ranking factors, we wanted to understand what specific attributes lead to higher conversion — and crucially, how these vary by geographical market.</p>
+                <p>While Airbnb's published research indicates that relevancy and conversion are the most important ranking factors, we wanted to understand what specific attributes lead to higher conversion - and crucially, how these vary by geographical market.</p>
 
                 <p>This collaboration combined my expertise in data acquisition and advanced analytics with Angel Host's deep knowledge of professional hosting, delivering actionable insights that could be applied across their global portfolio of managed properties.</p>
 
@@ -651,7 +652,7 @@
             <!-- The Challenge -->
             <section>
                 <h2>The Challenge</h2>
-                <p>Property managers often apply a one-size-fits-all approach to listing optimisation. But does a strategy that works in the USA also work in the Caribbean or Europe? We suspected not — and needed the data to prove it.</p>
+                <p>Property managers often apply a one-size-fits-all approach to listing optimisation. But does a strategy that works in the USA also work in the Caribbean or Europe? We suspected not - and needed the data to prove it.</p>
 
                 <p>The challenge was twofold: first, to gather comprehensive data on listing attributes and their correlation with search ranking; and second, to determine whether these correlations remained consistent across different geographical markets or varied significantly.</p>
             </section>
@@ -673,7 +674,7 @@
                         <div class="step-number">2</div>
                         <div class="step-content">
                             <h4>Comprehensive Variable Collection</h4>
-                            <p>Gathered over 70 unique variables for each listing — from common attributes like photos, amenities, reviews, and nightly prices, to granular details such as listing age, description word count, presence of carbon monoxide detectors, and even the number of landscape photos.</p>
+                            <p>Gathered over 70 unique variables for each listing - from common attributes like photos, amenities, reviews, and nightly prices, to granular details such as listing age, description word count, presence of carbon monoxide detectors, and even the number of landscape photos.</p>
                         </div>
                     </div>
                     <div class="method-step">
@@ -698,11 +699,11 @@
                 <h2>Key Findings</h2>
                 
                 <h3>The Critical Discovery: Geographic Variation</h3>
-                <p>Our research revealed something we had anticipated but now definitively proved: <strong>the correlations between property attributes and search rank varied significantly by geographical location.</strong> Instead of applying a top-down approach to search rank, Airbnb employs a more organic, ground-up strategy where results are unique to each market — likely based on attributes that performed best in previous searches for each type of guest.</p>
+                <p>Our research revealed something we had anticipated but now definitively proved: <strong>the correlations between property attributes and search rank varied significantly by geographical location.</strong> Instead of applying a top-down approach to search rank, Airbnb employs a more organic, ground-up strategy where results are unique to each market - likely based on attributes that performed best in previous searches for each type of guest.</p>
 
                 <div class="insight-box teal">
                     <h4>Strategic Advantage</h4>
-                    <p>Understanding which attributes matter most in each market gives property managers a crucial competitive advantage — enabling optimisation strategies tailored to local guest preferences and booking patterns.</p>
+                    <p>Understanding which attributes matter most in each market gives property managers a crucial competitive advantage - enabling optimisation strategies tailored to local guest preferences and booking patterns.</p>
                 </div>
 
                 <div class="chart-container">
@@ -711,9 +712,9 @@
                     <p class="image-caption">The chart shows how differently variables correlate to search rankings depending on the geographical location. Variables are ordered from positive to negative correlation, with each dot representing a different market.</p>
                 </div>
 
-                <p>The data highlights striking differences across the three markets analysed (USA, Caribbean, and Europe). For example, <strong>base_price</strong> shows high correlation with search rank in the USA and Caribbean markets, but notably lower correlation in the European city — which had large property inventory with inconsistent quality levels. In that market, positive reviews and overall ratings far outweighed the importance of competitive pricing.</p>
+                <p>The data highlights striking differences across the three markets analysed (USA, Caribbean, and Europe). For example, <strong>base_price</strong> shows high correlation with search rank in the USA and Caribbean markets, but notably lower correlation in the European city - which had large property inventory with inconsistent quality levels. In that market, positive reviews and overall ratings far outweighed the importance of competitive pricing.</p>
 
-                <p>Similarly, <strong>active_listings_count</strong> (the number of listings a host manages) was strongly correlated with better rankings in the Caribbean market, but far less so in the USA city. This doesn't mean Airbnb prioritises hosts with multiple listings — rather, in the Caribbean market, professional property managers likely deliver better guest experiences and thus attract more bookings.</p>
+                <p>Similarly, <strong>active_listings_count</strong> (the number of listings a host manages) was strongly correlated with better rankings in the Caribbean market, but far less so in the USA city. This doesn't mean Airbnb prioritises hosts with multiple listings - rather, in the Caribbean market, professional property managers likely deliver better guest experiences and thus attract more bookings.</p>
 
                 <h3>Surprising Variations</h3>
                 <p>Some findings ran counter to conventional wisdom:</p>
@@ -724,7 +725,7 @@
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
                         <h4>Long-Stay Discounts</h4>
-                        <p>Highly correlated with better rankings in some markets — but <strong>negatively correlated</strong> in others. A blanket discount strategy could actually hurt performance in certain cities.</p>
+                        <p>Highly correlated with better rankings in some markets - but <strong>negatively correlated</strong> in others. A blanket discount strategy could actually hurt performance in certain cities.</p>
                     </div>
                     <div class="finding-card">
                         <div class="finding-icon">
@@ -744,7 +745,7 @@
                 <div class="banner-example">
                     <div class="banner-example-title">Example: The "Rare Find" Badge in Action</div>
                     <img src="rarefind.webp" alt="Airbnb listing showing the Rare Find badge - a Cape Town property with Table Mountain views">
-                    <p>Properties with the "Rare find" banner showed strong ranking correlation — partly a self-fulfilling prophecy, as rare finds remain booked when featured prominently. The only way to obtain this banner is ensuring the calendar is often booked, which requires a smart pricing strategy. Similarly, the "New lower price" banner can boost rankings, but must be deployed strategically — not at the expense of profitability.</p>
+                    <p>Properties with the "Rare find" banner showed strong ranking correlation - partly a self-fulfilling prophecy, as rare finds remain booked when featured prominently. The only way to obtain this banner is ensuring the calendar is often booked, which requires a smart pricing strategy. Similarly, the "New lower price" banner can boost rankings, but must be deployed strategically - not at the expense of profitability.</p>
                 </div>
 
                 <h3>Universal Factors</h3>
@@ -794,7 +795,7 @@
 
                 <div class="insight-box">
                     <h4>Key Insight</h4>
-                    <p>Description word count showed surprisingly strong correlation with ranking across markets. This may indicate that hosts with detailed descriptions tend to be more conscientious across all aspects of hosting — or it may be a direct algorithmic factor. Either way, detailed descriptions deliver results.</p>
+                    <p>Description word count showed surprisingly strong correlation with ranking across markets. This may indicate that hosts with detailed descriptions tend to be more conscientious across all aspects of hosting - or it may be a direct algorithmic factor. Either way, detailed descriptions deliver results.</p>
                 </div>
             </section>
 
@@ -815,37 +816,37 @@
                         <tbody>
                             <tr>
                                 <td><span class="rank-badge">1</span></td>
-                                <td><strong>Always have the right price</strong> — use dynamic pricing tools to adjust rates daily based on market conditions</td>
+                                <td><strong>Always have the right price</strong> - use dynamic pricing tools to adjust rates daily based on market conditions</td>
                                 <td>Critical</td>
                             </tr>
                             <tr>
                                 <td><span class="rank-badge">2</span></td>
-                                <td><strong>Reply within one hour</strong> — strong correlation between response speed and rank (Angel Host targets 15 minutes)</td>
+                                <td><strong>Reply within one hour</strong> - strong correlation between response speed and rank (Angel Host targets 15 minutes)</td>
                                 <td>Critical</td>
                             </tr>
                             <tr>
                                 <td><span class="rank-badge">3</span></td>
-                                <td><strong>Deliver excellent service & solicit reviews</strong> — especially important in markets with inconsistent quality</td>
+                                <td><strong>Deliver excellent service & solicit reviews</strong> - especially important in markets with inconsistent quality</td>
                                 <td>High</td>
                             </tr>
                             <tr>
                                 <td><span class="rank-badge">4</span></td>
-                                <td><strong>Invest in professional photography</strong> — positive correlation between photo count/quality and rank</td>
+                                <td><strong>Invest in professional photography</strong> - positive correlation between photo count/quality and rank</td>
                                 <td>High</td>
                             </tr>
                             <tr>
                                 <td><span class="rank-badge">5</span></td>
-                                <td><strong>Write detailed descriptions</strong> — word count correlates strongly with ranking performance</td>
+                                <td><strong>Write detailed descriptions</strong> - word count correlates strongly with ranking performance</td>
                                 <td>High</td>
                             </tr>
                             <tr>
                                 <td><span class="rank-badge">6</span></td>
-                                <td><strong>Keep calendar updated</strong> — Airbnb rewards active hosts with better rankings</td>
+                                <td><strong>Keep calendar updated</strong> - Airbnb rewards active hosts with better rankings</td>
                                 <td>Medium</td>
                             </tr>
                             <tr>
                                 <td><span class="rank-badge">7</span></td>
-                                <td><strong>Tailor strategies by market</strong> — apply discount strategies selectively based on local correlation data</td>
+                                <td><strong>Tailor strategies by market</strong> - apply discount strategies selectively based on local correlation data</td>
                                 <td>High</td>
                             </tr>
                         </tbody>
@@ -856,31 +857,31 @@
             <!-- Results -->
             <section>
                 <h2>Outcome</h2>
-                <p>This research provided Angel Host with a data-driven framework for optimising their property management strategy — not just globally, but tailored to each market they operate in. The insights enabled them to:</p>
+                <p>This research provided Angel Host with a data-driven framework for optimising their property management strategy - not just globally, but tailored to each market they operate in. The insights enabled them to:</p>
 
                 <ul style="margin-left: 24px; margin-bottom: 20px;">
-                    <li style="margin-bottom: 12px;"><strong>Differentiate optimisation by market</strong> — applying different strategies based on proven local ranking factors</li>
-                    <li style="margin-bottom: 12px;"><strong>Prioritise reviews in high-inventory markets</strong> — focusing on guest experience where quality consistency matters most</li>
-                    <li style="margin-bottom: 12px;"><strong>Deploy discount strategies selectively</strong> — only in markets where long-stay discounts positively correlate with rankings</li>
-                    <li style="margin-bottom: 12px;"><strong>Train their team</strong> — to respond to all inquiries within 15 minutes based on the response speed correlation</li>
-                    <li style="margin-bottom: 12px;"><strong>Standardise professional content</strong> — detailed descriptions and professional photography as baseline requirements</li>
+                    <li style="margin-bottom: 12px;"><strong>Differentiate optimisation by market</strong> - applying different strategies based on proven local ranking factors</li>
+                    <li style="margin-bottom: 12px;"><strong>Prioritise reviews in high-inventory markets</strong> - focusing on guest experience where quality consistency matters most</li>
+                    <li style="margin-bottom: 12px;"><strong>Deploy discount strategies selectively</strong> - only in markets where long-stay discounts positively correlate with rankings</li>
+                    <li style="margin-bottom: 12px;"><strong>Train their team</strong> - to respond to all inquiries within 15 minutes based on the response speed correlation</li>
+                    <li style="margin-bottom: 12px;"><strong>Standardise professional content</strong> - detailed descriptions and professional photography as baseline requirements</li>
                 </ul>
 
-                <p>The collaboration demonstrated how rigorous data analysis can transform operational decision-making in the vacation rental industry — moving from generic best practices to evidence-based, market-specific optimisation strategies.</p>
+                <p>The collaboration demonstrated how rigorous data analysis can transform operational decision-making in the vacation rental industry - moving from generic best practices to evidence-based, market-specific optimisation strategies.</p>
             </section>
 
             <!-- CTA -->
             <div class="cta-section">
                 <h2>Looking to Unlock Insights from Your Data?</h2>
                 <p>I help businesses turn complex data into actionable strategies. Let's discuss how analytics can drive results for your organisation.</p>
-                <a href="mailto:nick@infoqlik.com" class="cta-button">Get in Touch</a>
+                <a href="mailto:nick@nickchild.info" class="cta-button">Get in Touch</a>
             </div>
         </div>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; InfoQlik | Data & Analytics Consulting</p>
+            <p>&copy; Nicholas Child Solutions | <a href="../../index.html" style="color: #FF7F6E;">Back to main site</a></p>
         </div>
     </footer>
 </body>
