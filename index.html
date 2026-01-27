@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nick Child — Data & Analytics</title>
+    <meta name="description" content="Independent Data & Analytics Consultant based in London. Building data platforms, leading analytics teams, and solving complex data problems.">
+    <meta name="author" content="Nicholas Child">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Nick Child — Data & Analytics">
+    <meta property="og:description" content="Independent Data & Analytics Consultant based in London.">
+    <meta property="og:url" content="https://nickchild.info">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Nicholas Child",
+      "jobTitle": "Data & Analytics Consultant",
+      "url": "https://nickchild.info",
+      "email": "nick@nickchild.info",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "London",
+        "addressCountry": "GB"
+      },
+      "sameAs": [
+        "https://linkedin.com/in/nicholaschild",
+        "https://medium.com/@childnick"
+      ]
+    }
+    </script>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-content">
+                <a href="#" class="nav-logo">nick child</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#experience" class="nav-link">Experience</a></li>
+                    <li><a href="#writing" class="nav-link">Writing</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <canvas id="heroCanvas" class="hero-canvas"></canvas>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-image">
+                    <img src="nick-profile.jpg" alt="Nick Child">
+                </div>
+                <div class="hero-text">
+                    <h1>Nick Child</h1>
+                    <p class="hero-role">Data & Analytics Consultant</p>
+                    <p class="hero-bio">
+                        I help companies build data platforms, lead analytics teams, and turn complex data into clear decisions. 
+                        Based in London, working with organisations from startups to enterprise.
+                    </p>
+                    <div class="hero-links">
+                        <a href="https://linkedin.com/in/nicholaschild" target="_blank">LinkedIn</a>
+                        <a href="https://medium.com/@childnick" target="_blank">Medium</a>
+                        <a href="mailto:nick@nickchild.info">Email</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <p class="section-subtitle">Background</p>
+            <h2 class="section-title">About</h2>
+
+            <div class="about-content">
+                <p>
+                    I've spent the last decade helping organisations make better use of their data. My work sits at the 
+                    intersection of strategy and implementation — I can define a data roadmap, but I'll also build the 
+                    pipelines and dashboards myself.
+                </p>
+                <p>
+                    I've led data teams, built platforms from scratch, and delivered projects across HealthTech, 
+                    entertainment, sports analytics, and consumer research. I'm comfortable presenting to boards 
+                    and equally comfortable debugging SQL at midnight.
+                </p>
+                <p>
+                    Outside of data, I serve as a school governor at Dundonald Primary and as Non-Executive Chairman 
+                    at Conbrako Engineering, a family manufacturing business.
+                </p>
+
+                <div class="about-details">
+                    <div class="about-detail">
+                        <h4>Education</h4>
+                        <p>University of Cape Town<br>Business Science (Marketing)</p>
+                    </div>
+                    <div class="about-detail">
+                        <h4>Location</h4>
+                        <p>London, UK</p>
+                    </div>
+                    <div class="about-detail">
+                        <h4>Current Focus</h4>
+                        <p>Available for contract work<br>and advisory roles</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <p class="section-subtitle">Experience</p>
+            <h2 class="section-title">Selected Work</h2>
+
+            <div class="experience-grid">
+                <div class="experience-item">
+                    <div class="experience-meta">
+                        <div class="experience-company">GetHarley</div>
+                        <div class="experience-period">2022 — 2024</div>
+                    </div>
+                    <div class="experience-content">
+                        <h3>Head of Data & Analytics</h3>
+                        <p>
+                            Built the data function from scratch at this HealthTech scale-up. Designed and implemented a modern data stack 
+                            (AWS, Snowflake, dbt, Omni), grew the team from 1 to 3, and delivered analytics automation that replaced 
+                            7 FTE worth of manual processes.
+                        </p>
+                        <p>
+                            Developed AI-powered customer service tooling that now handles 50%+ of inbound queries. 
+                            Reduced SLA response times from 24 hours to 10 minutes.
+                        </p>
+                        <div class="experience-tags">
+                            <span class="tag">AWS</span>
+                            <span class="tag">Snowflake</span>
+                            <span class="tag">dbt</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Omni</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-meta">
+                        <div class="experience-company">Meshh</div>
+                        <div class="experience-period">2021 — 2022</div>
+                    </div>
+                    <div class="experience-content">
+                        <h3>Head of Data</h3>
+                        <p>
+                            Led data strategy for a spatial analytics platform serving premium sports and entertainment clients 
+                            including Sky, NFL, F1, Formula-E, and LA Rams. Built visitor heatmaps, dwell-time analytics, 
+                            and customer segmentation models.
+                        </p>
+                        <p>
+                            Developed a benchmarking product that generated £150k ARR. 
+                            Reduced report preparation time by 90%.
+                        </p>
+                        <div class="experience-tags">
+                            <span class="tag">Spatial Analytics</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">PostgreSQL</span>
+                            <span class="tag">Looker</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-meta">
+                        <div class="experience-company">Vue Entertainment</div>
+                        <div class="experience-period">2018 — 2021</div>
+                    </div>
+                    <div class="experience-content">
+                        <h3>Senior Data Analyst → Analytics Manager</h3>
+                        <p>
+                            Led analytics across the international cinema business. Built ML-powered staff scheduling 
+                            (4% labour reduction, 5% utilisation increase), competitor price intelligence via web scraping, 
+                            and merchandise optimisation (20% margin improvement).
+                        </p>
+                        <p>
+                            Reduced reporting cycles by 75% through automation.
+                        </p>
+                        <div class="experience-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Power BI</span>
+                            <span class="tag">Web Scraping</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-meta">
+                        <div class="experience-company">Earlier</div>
+                        <div class="experience-period">2013 — 2018</div>
+                    </div>
+                    <div class="experience-content">
+                        <h3>InfoQlik (Founder) · Nielsen</h3>
+                        <p>
+                            Founded InfoQlik, a data consultancy focused on analytics automation and BI implementation. 
+                            Prior to that, worked at Nielsen in the analytics division, cutting my teeth on large-scale 
+                            consumer and media data.
+                        </p>
+                        <div class="experience-tags">
+                            <span class="tag">Consulting</span>
+                            <span class="tag">Tableau</span>
+                            <span class="tag">SQL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section id="tech-stack" class="tech-stack">
+        <div class="container">
+            <p class="section-subtitle">Technology</p>
+            <h2 class="section-title">Tools & Platforms</h2>
+
+            <div class="tech-categories">
+                <div class="tech-category">
+                    <h3>Cloud</h3>
+                    <div class="tech-items">
+                        <span class="tech-item">AWS</span>
+                        <span class="tech-item">GCP</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3>Data Warehouses</h3>
+                    <div class="tech-items">
+                        <span class="tech-item">Snowflake</span>
+                        <span class="tech-item">BigQuery</span>
+                        <span class="tech-item">PostgreSQL</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3>Transformation</h3>
+                    <div class="tech-items">
+                        <span class="tech-item">dbt</span>
+                        <span class="tech-item">Python</span>
+                        <span class="tech-item">SQL</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3>Visualisation</h3>
+                    <div class="tech-items">
+                        <span class="tech-item">Omni</span>
+                        <span class="tech-item">Looker</span>
+                        <span class="tech-item">Power BI</span>
+                        <span class="tech-item">Tableau</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3>Orchestration</h3>
+                    <div class="tech-items">
+                        <span class="tech-item">Fivetran</span>
+                        <span class="tech-item">Airflow</span>
+                        <span class="tech-item">n8n</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3>ML / AI</h3>
+                    <div class="tech-items">
+                        <span class="tech-item">scikit-learn</span>
+                        <span class="tech-item">Forecasting</span>
+                        <span class="tech-item">Segmentation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Writing Section -->
+    <section id="writing" class="writing">
+        <div class="container">
+            <p class="section-subtitle">Writing</p>
+            <h2 class="section-title">Technical Articles</h2>
+
+            <div class="writing-grid">
+                <a href="case-studies/lambda_optimisation/aws-lambda-case-study.html" class="article-card">
+                    <div class="article-content">
+                        <h3>Halving AWS Lambda Costs with Python Parallel Processing</h3>
+                        <p>A practical guide to optimising Lambda compute time and costs through parallel processing techniques.</p>
+                    </div>
+                    <div class="article-meta">
+                        <span>Case Study</span>
+                    </div>
+                </a>
+
+                <a href="case-studies/airbnb hack/airbnb-algorithm-research.html" class="article-card">
+                    <div class="article-content">
+                        <h3>Reverse Engineering Airbnb's Search Ranking Algorithm</h3>
+                        <p>Data-driven analysis of the factors that influence Airbnb search rankings, with actionable insights for hosts.</p>
+                    </div>
+                    <div class="article-meta">
+                        <span>Research</span>
+                    </div>
+                </a>
+
+                <a href="case-studies/angelhost/airbnb-case-study.html" class="article-card">
+                    <div class="article-content">
+                        <h3>Airbnb Search Ranking Algorithm Analysis</h3>
+                        <p>Deep dive into listing optimisation based on empirical data collection and statistical analysis.</p>
+                    </div>
+                    <div class="article-meta">
+                        <span>Analysis</span>
+                    </div>
+                </a>
+            </div>
+
+            <p style="margin-top: var(--spacing-md); color: var(--color-text-muted); font-size: 0.875rem;">
+                More writing on <a href="https://medium.com/@childnick" target="_blank">Medium</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <p class="section-subtitle">Contact</p>
+            <h2 class="section-title">Get in Touch</h2>
+
+            <div class="contact-content">
+                <p style="color: var(--color-text-secondary); max-width: 500px;">
+                    Open to discussing data strategy, platform builds, and advisory work. 
+                    Based in London, available remotely.
+                </p>
+                <div class="contact-links">
+                    <a href="mailto:nick@nickchild.info">nick@nickchild.info</a>
+                    <a href="https://linkedin.com/in/nicholaschild" target="_blank">LinkedIn</a>
+                    <a href="https://medium.com/@childnick" target="_blank">Medium</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <span>Nicholas Child</span>
+                <span>London, UK</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>

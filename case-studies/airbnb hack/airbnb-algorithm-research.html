@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reverse Engineering Airbnb's Search Ranking Algorithm | InfoQlik Case Study</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --accent: #ff5a5f;
+            --accent-light: #ffebec;
+            --teal: #00a699;
+            --teal-light: #e6f7f6;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --bg: #fafafa;
+            --white: #ffffff;
+            --border: #e9ecef;
+            --code-bg: #282a36;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #2d3a4f 100%);
+            color: var(--white);
+            padding: 80px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,90,95,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--white);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-family: 'Fraunces', serif;
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 24px;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            opacity: 0.9;
+            max-width: 650px;
+            margin-bottom: 40px;
+        }
+
+        .meta-row {
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .meta-item svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Main Content */
+        .main {
+            padding: 60px 0;
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 24px;
+            position: relative;
+            padding-bottom: 16px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 32px 0 16px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--border);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+        }
+
+        .stat-number {
+            font-family: 'Fraunces', serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-number.teal {
+            color: var(--teal);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 24px 0;
+        }
+
+        .tech-tag {
+            background: var(--primary);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .tech-tag.python { background: #3776ab; }
+        .tech-tag.scrapy { background: #60a839; }
+        .tech-tag.sql { background: #336791; }
+        .tech-tag.qlik { background: #009845; }
+
+        /* Chart Container */
+        .chart-container {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 32px;
+            margin: 32px 0;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 24px;
+        }
+
+        .data-image {
+            width: 100%;
+            border-radius: 12px;
+        }
+
+        .image-caption {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-top: 16px;
+            font-style: italic;
+        }
+
+        /* Code Block */
+        .code-container {
+            background: var(--code-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 32px 0;
+        }
+
+        .code-header {
+            background: rgba(255,255,255,0.1);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .code-dot.red { background: #ff5f56; }
+        .code-dot.yellow { background: #ffbd2e; }
+        .code-dot.green { background: #27ca40; }
+
+        .code-filename {
+            margin-left: 12px;
+            color: rgba(255,255,255,0.6);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+        }
+
+        .code-image {
+            width: 100%;
+            display: block;
+        }
+
+        /* Key Insight Box */
+        .insight-box {
+            background: linear-gradient(135deg, var(--accent-light) 0%, #fff5f5 100%);
+            border-left: 4px solid var(--accent);
+            border-radius: 0 16px 16px 0;
+            padding: 28px 32px;
+            margin: 32px 0;
+        }
+
+        .insight-box h4 {
+            color: var(--accent);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .insight-box p {
+            margin: 0;
+            font-size: 17px;
+            color: var(--primary);
+        }
+
+        .insight-box.teal {
+            background: linear-gradient(135deg, var(--teal-light) 0%, #f0faf8 100%);
+            border-left-color: var(--teal);
+        }
+
+        .insight-box.teal h4 {
+            color: var(--teal);
+        }
+
+        /* Two Column Layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        @media (max-width: 768px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .two-col .chart-container {
+            margin: 0;
+        }
+
+        /* Pipeline Steps */
+        .pipeline {
+            display: flex;
+            gap: 16px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .pipeline-step {
+            flex: 1;
+            min-width: 180px;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .pipeline-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: var(--accent);
+            z-index: 1;
+        }
+
+        @media (max-width: 900px) {
+            .pipeline-step:not(:last-child)::after {
+                display: none;
+            }
+        }
+
+        .pipeline-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 24px;
+        }
+
+        .pipeline-step h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .pipeline-step p {
+            font-size: 13px;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        /* Finding Cards */
+        .finding-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+
+        .finding-card h4 {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .finding-rank {
+            background: var(--accent);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .finding-card p {
+            margin: 0;
+            font-size: 15px;
+            color: var(--text-light);
+            padding-left: 40px;
+        }
+
+        /* Comparison */
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        @media (max-width: 600px) {
+            .comparison-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .comparison-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .comparison-card h4 {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .comparison-value {
+            font-family: 'Fraunces', serif;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .comparison-card.before .comparison-value {
+            color: var(--text-light);
+        }
+
+        .comparison-card.after .comparison-value {
+            color: var(--teal);
+        }
+
+        .comparison-label {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* Listing Example */
+        .listing-example {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            margin: 32px 0;
+        }
+
+        .listing-example-title {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .listing-example img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, #2d3a4f 100%);
+            border-radius: 24px;
+            padding: 48px;
+            text-align: center;
+            color: var(--white);
+            margin-top: 60px;
+        }
+
+        .cta-section h2 {
+            color: var(--white);
+        }
+
+        .cta-section h2::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .cta-section p {
+            color: rgba(255,255,255,0.85);
+            max-width: 500px;
+            margin: 0 auto 32px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--white);
+            padding: 16px 36px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255,90,95,0.4);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            h2 {
+                font-size: 26px;
+            }
+
+            .hero {
+                padding: 60px 0 80px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container hero-content">
+            <span class="badge">Case Study</span>
+            <h1>Reverse Engineering Airbnb's Search Ranking Algorithm</h1>
+            <p class="hero-subtitle">Building a Python web scraping pipeline to analyse 1,600+ listings and uncover the factors that drive search visibility on Airbnb.</p>
+            <div class="meta-row">
+                <div class="meta-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span>Market: Cape Town, South Africa</span>
+                </div>
+                <div class="meta-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    <span>Type: Personal Research</span>
+                </div>
+                <div class="meta-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span>Completed: 2017</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Overview -->
+            <section>
+                <h2>Project Overview</h2>
+                <p>As a part-time property manager with a portfolio of rental properties in Cape Town, I wanted to understand what factors influence search rankings on Airbnb. Higher rankings mean more visibility, more bookings, and ultimately more revenue.</p>
+                
+                <p>Airbnb doesn't publish their ranking algorithm, so I built a data pipeline to scrape listing data at scale, store it in a relational database, and perform statistical correlation analysis to reverse-engineer the factors that matter most.</p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">1,638</div>
+                        <div class="stat-label">Listings Analysed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">27</div>
+                        <div class="stat-label">Factors Tested</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">34</div>
+                        <div class="stat-label">Amenities Ranked</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number teal">17</div>
+                        <div class="stat-label">Search Pages Scraped</div>
+                    </div>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-tag python">Python</span>
+                    <span class="tech-tag scrapy">Scrapy</span>
+                    <span class="tech-tag sql">SQL</span>
+                    <span class="tech-tag qlik">QlikView</span>
+                </div>
+            </section>
+
+            <!-- Data Pipeline -->
+            <section>
+                <h2>The Data Pipeline</h2>
+                <p>Since Airbnb doesn't provide a public API, I built a custom web scraping solution to gather the data needed for analysis:</p>
+
+                <div class="pipeline">
+                    <div class="pipeline-step">
+                        <div class="pipeline-icon">🕷️</div>
+                        <h4>Scrape</h4>
+                        <p>Python Scrapy spider</p>
+                    </div>
+                    <div class="pipeline-step">
+                        <div class="pipeline-icon">🔄</div>
+                        <h4>Parse</h4>
+                        <p>Extract JSON from HTML</p>
+                    </div>
+                    <div class="pipeline-step">
+                        <div class="pipeline-icon">🗄️</div>
+                        <h4>Store</h4>
+                        <p>Relational database</p>
+                    </div>
+                    <div class="pipeline-step">
+                        <div class="pipeline-icon">📊</div>
+                        <h4>Analyse</h4>
+                        <p>Correlation statistics</p>
+                    </div>
+                </div>
+
+                <h3>Target Data Points</h3>
+                <p>Each Airbnb listing displays surface-level information like price and reviews, but much richer data is hidden in the page's underlying JSON structure. I identified the key fields to extract:</p>
+
+                <div class="listing-example">
+                    <div class="listing-example-title">Data extracted from each listing</div>
+                    <img src="airbnb_listing_features.webp" alt="Airbnb listing showing extracted data points: price, reviews, name, beds, guests">
+                </div>
+
+                <h3>Building the Scrapy Spider</h3>
+                <p>I built a Python web spider using the <strong>Scrapy</strong> framework to systematically crawl Airbnb's search results. The spider was configured to target listings accommodating 6+ guests within specific GPS coordinates covering greater Cape Town.</p>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <div class="code-dot red"></div>
+                        <div class="code-dot yellow"></div>
+                        <div class="code-dot green"></div>
+                        <span class="code-filename">airbnb_spider.py</span>
+                    </div>
+                    <img src="spider_code.webp" alt="Python Scrapy spider code showing URL construction with GPS coordinates and pagination" class="code-image">
+                </div>
+
+                <p>The spider constructs URLs dynamically, appending search parameters (guest count, GPS boundaries) and iterating through all result pages automatically.</p>
+
+                <h3>Parsing Hidden JSON Data</h3>
+                <p>The real value came from extracting data embedded in each listing's HTML as JSON. This included fields not visible on the surface — satisfaction scores, response rates, calendar update frequency, and 30+ other variables.</p>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <div class="code-dot red"></div>
+                        <div class="code-dot yellow"></div>
+                        <div class="code-dot green"></div>
+                        <span class="code-filename">parse_listing.py</span>
+                    </div>
+                    <img src="parse_items.webp" alt="Python code parsing JSON data from Airbnb listing pages" class="code-image">
+                </div>
+
+                <div class="insight-box teal">
+                    <h4>Technical Note</h4>
+                    <p>The JSON was embedded in a script tag within the HTML. Using XPath to extract the content and Python's json library to parse it gave access to far more data than the visible page elements.</p>
+                </div>
+            </section>
+
+            <!-- Database Structure -->
+            <section>
+                <h2>Database Architecture</h2>
+                <p>The scraped data was normalised into a relational structure with five interconnected tables, enabling flexible analysis across multiple dimensions:</p>
+
+                <div class="chart-container">
+                    <div class="chart-title">Entity Relationship Diagram</div>
+                    <img src="database_erd.webp" alt="Database ERD showing relationships between Scrapy Data, io Data, Amenities, Suburb, and Gender tables" class="data-image">
+                </div>
+
+                <p>The central <strong>Scrapy Data</strong> table contained the detailed listing information, joined to amenity codes (with a separate lookup table for descriptions), suburb data for location analysis, and a gender classification table to test whether host gender correlated with rankings.</p>
+            </section>
+
+            <!-- Key Findings -->
+            <section>
+                <h2>Key Findings</h2>
+                
+                <h3>Guest Satisfaction: The Dominant Factor</h3>
+                <p>The most striking finding was the clear linear relationship between guest satisfaction scores and search ranking. Page 1 listings averaged 83.7% satisfaction, declining steadily to 42.9% on page 17.</p>
+
+                <div class="chart-container">
+                    <div class="chart-title">Average Guest Satisfaction by Search Result Page</div>
+                    <img src="results.webp" alt="Table showing guest satisfaction declining from 83.7% on page 1 to 42.9% on page 17" class="data-image">
+                    <p class="image-caption">Clear inverse correlation: as page number increases, average guest satisfaction decreases.</p>
+                </div>
+
+                <h3>Top 5 Ranking Factors</h3>
+                <p>Statistical correlation analysis revealed the five factors most strongly associated with higher search rankings:</p>
+
+                <div class="chart-container">
+                    <div class="chart-title">Factors 1-5: Strongest Correlation with Search Rank</div>
+                    <img src="page_vs_top_5_factors.webp" alt="Data table showing Guest Satisfaction, Price, Word Count, Minimum Nights, and Days since Calendar Update by page" class="data-image">
+                </div>
+
+                <div class="finding-card">
+                    <h4><span class="finding-rank">1</span> Guest Satisfaction (0.906)</h4>
+                    <p>The composite score from guest reviews is by far the most important factor. Airbnb clearly prioritises properties that deliver great experiences.</p>
+                </div>
+
+                <div class="finding-card">
+                    <h4><span class="finding-rank">2</span> Price (0.901)</h4>
+                    <p>Lower prices correlate with better rankings. Airbnb wants to show users the best deals — competitive pricing is rewarded.</p>
+                </div>
+
+                <div class="finding-card">
+                    <h4><span class="finding-rank">3</span> Description Word Count (0.897)</h4>
+                    <p>Listings with detailed descriptions rank higher. This could be algorithmic, or it may indicate that thorough hosts perform better overall.</p>
+                </div>
+
+                <div class="finding-card">
+                    <h4><span class="finding-rank">4</span> Minimum Stay Length (0.885)</h4>
+                    <p>Shorter minimum stays correlate with higher rankings — flexibility is rewarded.</p>
+                </div>
+
+                <div class="finding-card">
+                    <h4><span class="finding-rank">5</span> Calendar Activity (0.884)</h4>
+                    <p>Hosts who frequently update their calendar rank higher. Airbnb rewards active engagement with the platform.</p>
+                </div>
+
+                <h3>Factors 6-10</h3>
+
+                <div class="chart-container">
+                    <div class="chart-title">Factors 6-10: Secondary Correlation Factors</div>
+                    <img src="page_vs_some_factors.webp" alt="Data table showing Price/Bed, Name Length, InstantBook %, Reviews, and Wishlist saves by page" class="data-image">
+                </div>
+
+                <p>Notable findings from the secondary factors include the importance of <strong>Instant Book</strong> (0.844 correlation), <strong>review count</strong> (0.828), and <strong>wishlist saves</strong> (0.819).</p>
+
+                <h3>The Complete Correlation Table</h3>
+                <p>All 27 factors tested, ranked by their correlation coefficient with search page position:</p>
+
+                <div class="chart-container">
+                    <div class="chart-title">All Factors Ranked by Correlation to Search Position</div>
+                    <img src="final_results.webp" alt="Complete ranking table showing all 27 factors and their correlation coefficients" class="data-image">
+                    <p class="image-caption">Green = strong positive correlation with ranking. Red = weak or no correlation. Coefficients converted to absolute values for easier interpretation.</p>
+                </div>
+
+                <div class="insight-box">
+                    <h4>Surprising Non-Factors</h4>
+                    <p>SuperHost status ranked only 13th (0.783) — not as impactful as expected. Account age, allowing smoking, pet-friendly policies, and having "view" in the title showed almost no correlation with ranking.</p>
+                </div>
+            </section>
+
+            <!-- Algorithm Change Detection -->
+            <section>
+                <h2>Detecting Algorithm Changes Over Time</h2>
+                <p>By comparing data from February 2016 and February 2017, I was able to detect a significant shift in how Airbnb treats Instant Book listings:</p>
+
+                <div class="chart-container">
+                    <div class="chart-title">Instant Book Correlation: 2016 vs 2017</div>
+                    <img src="change_over_time.webp" alt="Side-by-side comparison showing Instant Book went from 21.1% average in 2016 to 27.1% in 2017 with clear correlation to page rank" class="data-image">
+                </div>
+
+                <div class="comparison-container">
+                    <div class="comparison-card before">
+                        <h4>February 2016</h4>
+                        <div class="comparison-value">0.14</div>
+                        <div class="comparison-label">Correlation coefficient<br>(No meaningful relationship)</div>
+                    </div>
+                    <div class="comparison-card after">
+                        <h4>February 2017</h4>
+                        <div class="comparison-value">0.84</div>
+                        <div class="comparison-label">Correlation coefficient<br>(Strong positive correlation)</div>
+                    </div>
+                </div>
+
+                <p>This aligned with Airbnb's September 2016 announcement that they would "accelerate the use of Instant Book" to reach one million listings by January 2017, partly as a measure to reduce discrimination in the booking process.</p>
+            </section>
+
+            <!-- Amenities Analysis -->
+            <section>
+                <h2>Amenity Correlation Analysis</h2>
+                <p>I also analysed which amenities correlated most strongly with higher search rankings:</p>
+
+                <div class="chart-container">
+                    <div class="chart-title">Amenities Ranked by Correlation to Search Position</div>
+                    <img src="correlation.webp" alt="Table showing 34 amenities ranked by correlation, with Iron, Laptop Workspace, and Hangers at the top" class="data-image">
+                    <p class="image-caption">Red highlighted rows indicate "Business Ready" required amenities — notably these cluster in the top half of correlations.</p>
+                </div>
+
+                <p>Interestingly, "Business Ready" required amenities (iron, laptop workspace, hangers, hair dryer, essentials) all showed strong correlation with better rankings. Meanwhile, TV and Cable TV showed almost no correlation — perhaps less important for properties hosting 6+ guests.</p>
+            </section>
+
+            <!-- Conclusions -->
+            <section>
+                <h2>Actionable Recommendations</h2>
+                <p>Based on the correlation analysis, here are the most impactful actions a host can take to improve search ranking:</p>
+
+                <div class="chart-container">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: var(--primary); color: white;">
+                                <th style="padding: 16px; text-align: left; border-radius: 12px 0 0 0;">#</th>
+                                <th style="padding: 16px; text-align: left;">Action</th>
+                                <th style="padding: 16px; text-align: left; border-radius: 0 12px 0 0;">Why It Works</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 16px; font-weight: 600; color: var(--accent);">1</td>
+                                <td style="padding: 16px;"><strong>Keep your calendar updated</strong></td>
+                                <td style="padding: 16px; color: var(--text-light);">Shows active engagement; Airbnb rewards responsive hosts</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 16px; font-weight: 600; color: var(--accent);">2</td>
+                                <td style="padding: 16px;"><strong>Ask guests to complete reviews</strong></td>
+                                <td style="padding: 16px; color: var(--text-light);">Guest satisfaction is the #1 ranking factor</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 16px; font-weight: 600; color: var(--accent);">3</td>
+                                <td style="padding: 16px;"><strong>Price competitively</strong></td>
+                                <td style="padding: 16px; color: var(--text-light);">Airbnb favours listings that offer value</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 16px; font-weight: 600; color: var(--accent);">4</td>
+                                <td style="padding: 16px;"><strong>Lower minimum stay requirements</strong></td>
+                                <td style="padding: 16px; color: var(--text-light);">Flexibility correlates with higher rankings</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 16px; font-weight: 600; color: var(--accent);">5</td>
+                                <td style="padding: 16px;"><strong>Enable Instant Book</strong></td>
+                                <td style="padding: 16px; color: var(--text-light);">Algorithm now strongly favours instant bookability</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 16px; font-weight: 600; color: var(--accent);">6</td>
+                                <td style="padding: 16px;"><strong>Respond quickly to requests</strong></td>
+                                <td style="padding: 16px; color: var(--text-light);">Response rate and time both correlate with ranking</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 16px; font-weight: 600; color: var(--accent);">7</td>
+                                <td style="padding: 16px;"><strong>Add business-ready amenities</strong></td>
+                                <td style="padding: 16px; color: var(--text-light);">Iron, desk, hangers, hair dryer, essentials all help</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Impact -->
+            <section>
+                <h2>Project Impact</h2>
+                <p>This research project delivered practical insights that I applied directly to the properties I manage, and it laid the groundwork for larger-scale research collaborations with professional property management companies.</p>
+
+                <div class="insight-box teal">
+                    <h4>What Came Next</h4>
+                    <p>This methodology was later expanded into a multi-market study with Angel Host, analysing how ranking factors vary by geographic location — proving that a one-size-fits-all optimisation strategy doesn't work.</p>
+                </div>
+
+                <p>The project demonstrated that with the right technical approach — web scraping, data engineering, and statistical analysis — it's possible to reverse-engineer opaque algorithms and extract actionable business intelligence.</p>
+            </section>
+
+            <!-- CTA -->
+            <div class="cta-section">
+                <h2>Need Custom Data Solutions?</h2>
+                <p>I build data pipelines, web scrapers, and analytics solutions that turn raw data into competitive advantage.</p>
+                <a href="mailto:nick@infoqlik.com" class="cta-button">Get in Touch</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; InfoQlik | Data & Analytics Consulting</p>
+        </div>
+    </footer>
+</body>
+</html>
