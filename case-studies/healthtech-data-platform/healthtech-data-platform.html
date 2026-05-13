@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HealthTech Data Platform Modernization | Nicholas Child</title>
+    <title>Building GetHarley’s Data & Analytics Function | Nicholas Child</title>
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,23 +13,14 @@
 <body>
     <header class="hero">
         <div class="container hero-content">
-            <a href="../../index.html#writing" class="back-link">← Back to articles</a>
+            <a href="../../index.html#writing" class="back-link">← Back to case studies</a>
             <span class="badge">Case Study</span>
-            <h1>HealthTech Data Platform Modernization</h1>
-            <p class="hero-subtitle">Rebuilding a fragmented analytics stack into a governed, self-serve platform for clinical and operations teams.</p>
+            <h1>Building GetHarley’s Data & Analytics Function</h1>
+            <p class="hero-subtitle">A zero-to-one data function for a HealthTech scale-up: modern data stack, self-serve analytics, automation, and board-level visibility.</p>
             <div class="meta-row">
-                <div class="meta-item">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                    <span>Project: HealthTech Analytics Platform</span>
-                </div>
-                <div class="meta-item">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                    <span>Tech: Snowflake, dbt, Airflow, Looker</span>
-                </div>
-                <div class="meta-item">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    <span>Completed: Placeholder — Month YYYY</span>
-                </div>
+                <div class="meta-item"><span>Project: GetHarley data platform and analytics operating model</span></div>
+                <div class="meta-item"><span>Tech: AWS, Snowflake, dbt, Fivetran, Omni, Python</span></div>
+                <div class="meta-item"><span>Role: Strategy, delivery, and hands-on implementation</span></div>
             </div>
         </div>
     </header>
@@ -38,78 +29,78 @@
         <div class="container">
             <section>
                 <h2>The Results</h2>
-                <p>Modernization unlocked faster insight delivery and better governance across clinical reporting.</p>
+                <p>The work turned data from a reactive reporting service into a business operating layer used across operations, leadership, product, and customer support.</p>
 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-number">Placeholder +XX%</div>
-                        <div class="stat-label">Reduction in report turnaround time</div>
+                        <div class="stat-number">7 FTE</div>
+                        <div class="stat-label">Manual operational effort replaced through automation</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number green">Placeholder -XX%</div>
-                        <div class="stat-label">Decrease in data quality incidents</div>
+                        <div class="stat-number green">1 → 3</div>
+                        <div class="stat-label">Data team grown while scaling platform coverage</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">Placeholder X</div>
-                        <div class="stat-label">Departments onboarded to self-serve</div>
+                        <div class="stat-number">24h → 10m</div>
+                        <div class="stat-label">Customer-service response SLA improvement from AI-enabled workflows</div>
                     </div>
                 </div>
-
-                <p><strong>Placeholder note:</strong> Metrics above are illustrative until final client approvals are confirmed.</p>
             </section>
 
             <section>
                 <h2>The Challenge</h2>
-                <p>Clinical teams relied on a patchwork of spreadsheets, manual SQL exports, and inconsistent metric definitions. Data refreshes were slow, audits were painful, and conflicting numbers undermined trust.</p>
+                <p>GetHarley needed trusted reporting and faster operational feedback while scaling. Data lived across operational systems, definitions varied by team, and analysts were pulled into repeat manual work instead of improving the business.</p>
                 <div class="insight-box">
-                    <h4>Core Pain Points</h4>
-                    <p>Single-source-of-truth issues, delayed reporting cycles, and limited access to governed datasets.</p>
+                    <h4>What mattered</h4>
+                    <p>The problem was not only technical. The platform had to earn trust with stakeholders, support board-level decisions, and give operators confidence that the numbers matched the reality of the business.</p>
                 </div>
             </section>
 
             <section>
                 <h2>The Solution</h2>
-                <p>We consolidated data into a centralized warehouse, standardized transformation logic, and introduced semantic models for consistent metrics across teams.</p>
+                <p>I designed and implemented the modern data stack, established modelling patterns in dbt, introduced governed self-serve analytics in Omni, and built automation around high-friction operational workflows.</p>
 
-                <h3>Platform Blueprint</h3>
+                <h3>Implementation Highlights</h3>
                 <div class="timeline">
                     <div class="timeline-item">
-                        <h4>Ingestion Modernization</h4>
-                        <p>Replaced ad-hoc extracts with scheduled pipelines and automated data validation checks.</p>
+                        <h4>Platform foundations</h4>
+                        <p>Implemented reliable ingestion, warehouse modelling, and analytics layers across AWS, Snowflake, Fivetran, dbt, and Omni.</p>
                     </div>
                     <div class="timeline-item">
-                        <h4>Metric Governance</h4>
-                        <p>Defined shared metric definitions with clinical leads and embedded them in dbt models.</p>
+                        <h4>Operating cadence</h4>
+                        <p>Built board-ready reporting, core business KPIs, and reusable definitions so teams were not arguing from different numbers.</p>
                     </div>
                     <div class="timeline-item">
-                        <h4>Self-Serve Analytics</h4>
-                        <p>Delivered curated data marts and Looker explores to reduce analyst bottlenecks.</p>
+                        <h4>Automation and AI</h4>
+                        <p>Delivered automation and AI-powered customer-service tooling that reduced manual work and accelerated response times.</p>
                     </div>
                 </div>
 
                 <div class="tech-stack">
+                    <span class="tech-tag">AWS</span>
                     <span class="tech-tag">Snowflake</span>
                     <span class="tech-tag">dbt</span>
-                    <span class="tech-tag">Airflow</span>
-                    <span class="tech-tag">Looker</span>
+                    <span class="tech-tag">Fivetran</span>
+                    <span class="tech-tag">Omni</span>
+                    <span class="tech-tag">Python</span>
                 </div>
             </section>
 
             <section>
                 <h2>Impact</h2>
-                <p>Leadership gained reliable dashboards for operational planning while analysts reclaimed time previously spent on manual data prep.</p>
+                <p>The data function became a practical multiplier: fewer manual reports, clearer leadership decisions, faster operational response, and a team structure capable of scaling beyond a single analyst.</p>
 
                 <div class="comparison-grid">
                     <div class="comparison-card before">
                         <h4>Before</h4>
-                        <div class="comparison-value">Weeks</div>
-                        <div class="comparison-label">Reporting cycle time</div>
+                        <div class="comparison-value">Reactive</div>
+                        <div class="comparison-label">Manual reporting and inconsistent definitions</div>
                     </div>
                     <div class="comparison-arrow">→</div>
                     <div class="comparison-card after">
                         <h4>After</h4>
-                        <div class="comparison-value">Days</div>
-                        <div class="comparison-label">Reporting cycle time</div>
+                        <div class="comparison-value">Operational</div>
+                        <div class="comparison-label">Governed metrics, automation, and self-serve analytics</div>
                     </div>
                 </div>
             </section>
@@ -117,18 +108,18 @@
             <section>
                 <h2>Key Takeaways</h2>
                 <div class="chart-container">
-                    <h3 style="margin-top: 0;">Governance Enables Speed</h3>
-                    <p style="margin-bottom: 0;">Shared metric definitions and automated tests reduced rework and built stakeholder confidence.</p>
+                    <h3 style="margin-top: 0;">Senior data work is part product, part platform</h3>
+                    <p style="margin-bottom: 0;">A useful data function needs infrastructure, judgement, stakeholder trust, and a bias toward removing operational friction.</p>
                 </div>
                 <div class="chart-container">
-                    <h3 style="margin-top: 0;">Self-Serve Scales Teams</h3>
-                    <p style="margin-bottom: 0;">Curated data marts and enablement sessions helped clinicians and operators answer questions independently.</p>
+                    <h3 style="margin-top: 0;">AI works best when tied to a real workflow</h3>
+                    <p style="margin-bottom: 0;">The customer-service tooling mattered because it changed response times and workload, not because it was AI for its own sake.</p>
                 </div>
             </section>
 
             <div class="cta-section">
-                <h2>Need a Modern Data Platform?</h2>
-                <p>I help teams modernize analytics stacks, align on metrics, and deliver trusted self-serve reporting.</p>
+                <h2>Need a Data Function That Actually Changes Operations?</h2>
+                <p>I help teams build the platform, metrics, automation, and operating rhythm that make data useful every day.</p>
                 <a href="mailto:nick@nickchild.info" class="cta-button">Get in Touch</a>
             </div>
         </div>

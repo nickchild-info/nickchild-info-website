@@ -217,32 +217,34 @@ caseStudyCards.forEach(card => {
 const contactForm = document.getElementById('contactForm');
 const formMessage = document.getElementById('formMessage');
 
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+if (contactForm && formMessage) {
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
 
-    // Get form data
-    const formData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        message: document.getElementById('message').value
-    };
+        // Get form data
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            message: document.getElementById('message').value
+        };
 
-    // Show success message (in production, this would submit to a backend)
-    formMessage.textContent = 'Thank you! Your message has been sent. I\'ll get back to you soon.';
-    formMessage.className = 'form-message success';
+        // Show success message (in production, this would submit to a backend)
+        formMessage.textContent = 'Thank you! Your message has been sent. I\'ll get back to you soon.';
+        formMessage.className = 'form-message success';
 
-    // Reset form
-    contactForm.reset();
+        // Reset form
+        contactForm.reset();
 
-    // Hide message after 5 seconds
-    setTimeout(() => {
-        formMessage.style.display = 'none';
-    }, 5000);
+        // Hide message after 5 seconds
+        setTimeout(() => {
+            formMessage.style.display = 'none';
+        }, 5000);
 
-    // Log form data (for development)
-    console.log('Form submitted:', formData);
-    console.log('Note: Connect this form to Formspree or similar service for production.');
-});
+        // Log form data (for development)
+        console.log('Form submitted:', formData);
+        console.log('Note: Connect this form to Formspree or similar service for production.');
+    });
+}
 
 // ===================================
 // Add fade-in animation to hero on load

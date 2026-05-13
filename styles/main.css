@@ -409,6 +409,20 @@ h1, h2, h3, h4, h5, h6 {
     border: 1px solid var(--color-border);
 }
 
+.tech-category-featured {
+    grid-column: span 2;
+    padding: var(--spacing-md);
+    background: linear-gradient(135deg, rgba(255, 127, 110, 0.12), rgba(255, 155, 142, 0.04));
+    border: 1px solid var(--color-accent-muted);
+    border-radius: var(--radius-lg);
+}
+
+.tech-item-featured {
+    color: var(--color-text-primary);
+    border-color: var(--color-accent-muted);
+    background: rgba(255, 127, 110, 0.10);
+}
+
 /* ===================================
    About Section
    =================================== */
@@ -552,6 +566,10 @@ h1, h2, h3, h4, h5, h6 {
 
     .article-card {
         grid-template-columns: 1fr;
+    }
+
+    .tech-category-featured {
+        grid-column: span 1;
     }
 
     .article-meta {
