@@ -247,16 +247,6 @@ if (contactForm && formMessage) {
 }
 
 // ===================================
-// Add fade-in animation to hero on load
-// ===================================
-window.addEventListener('load', () => {
-    const heroContent = document.querySelector('.hero-content');
-    if (heroContent) {
-        heroContent.classList.add('fade-in-up');
-    }
-});
-
-// ===================================
 // Performance: Reduce animations on mobile
 // ===================================
 if (window.innerWidth < 768) {
